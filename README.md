@@ -1,2 +1,1 @@
-# hw-control
-Hardware Control
+# Hardware  Controls
