@@ -71,7 +71,7 @@ export class WiseXboardControl implements IWiseXboardControl {
 
         const pkt = [chr('X'), chr('R'), 2, 0, 0, 0, 0, 0, chr('S')]
         pkt[2 + pin] = value
-        console.log(`digitalWrite: pin=${pin}, value=${value}`)
+        if (DEBUG) console.log(`digitalWrite: pin=${pin}, value=${value}`)
         await helper.write(pkt)
     }
 
