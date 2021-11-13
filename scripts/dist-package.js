@@ -5,6 +5,7 @@ async function main() {
     shell.mkdir('dist')
     shell.cp('-rf', './build/cjs', 'dist/')
     shell.cp('-rf', 'package-dist.json', 'dist/package.json')
+    shell.cp('-rf', '.npmrc', 'dist/.npmrc')
 }
 
 main()
