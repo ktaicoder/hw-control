@@ -17,14 +17,13 @@ module.exports = {
         'eslint:recommended',
         'plugin:@typescript-eslint/recommended',
         'plugin:prettier/recommended',
-        'plugin:workspaces/recommended',
     ],
     globals: {
         Atomics: 'readonly',
         SharedArrayBuffer: 'readonly',
     },
 
-    plugins: ['prettier', 'workspaces'],
+    plugins: ['prettier'],
     rules: {
         'no-useless-constructor': 'off',
         '@typescript-eslint/explicit-function-return-type': 'off',

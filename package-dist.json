@@ -1,0 +1,18 @@
+{
+  "name": "@ktaicoder/hw-proto",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ktaicoder/hw-proto.git"
+  },
+  "private": false,
+  "version": "1.0.4",
+  "main": "cjs/index.js",
+  "author": "ktaicoder",
+  "license": "MIT",
+  "dependencies": {},
+  "peerDependencies": {
+    "rxjs": "^7",
+    "serialport": "^9",
+    "@ktaicoder/hw-proto": "^1.0.4"
+  }
+}
