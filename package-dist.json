@@ -1,13 +1,9 @@
 {
   "name": "@ktaicoder/hw-control",
-  "private": false,
-  "version": "1.0.7",
+  "version": "1.0.10",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ktaicoder/hw-control.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "url": "git+https://github.com/ktaicoder/hw-control.git"
   },
   "main": "cjs/index.js",
   "author": "ktaicoder",
@@ -16,6 +12,11 @@
   "peerDependencies": {
     "rxjs": "^7",
     "serialport": "^9",
-    "@ktaicoder/hw-proto": "^1.0.0"
-  }
+    "@ktaicoder/hw-proto": "^1.0.6"
+  },
+  "description": "KT AI Block coding hardware control",
+  "bugs": {
+    "url": "https://github.com/ktaicoder/hw-control/issues"
+  },
+  "homepage": "https://aicodingblock.kt.co.kr"
 }

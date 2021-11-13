@@ -238,10 +238,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@ktaicoder/hw-proto@^1.0.4":
-  version "1.0.4"
-  resolved "https://npm.pkg.github.com/download/@ktaicoder/hw-proto/1.0.4/3280bfb518c0ad7d5d40df175f3c03c02f07fe806ebbebb89e2ba8203e2b7c2e#be70a0fa0c9e20a5be626c086d62347226c86e78"
-  integrity sha512-df7II1i35ytEuZXNwCndJ5NeY3mQVOxpTcMBvXYligN7MF9Ha6KGO/GG2D53gsCKFSl4nfJAHHqq5aXFplzo3Q==
+"@ktaicoder/hw-proto@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@ktaicoder/hw-proto/-/hw-proto-1.0.6.tgz#a16f77c7cfcb6860ba59635ae456f1bc50e827aa"
+  integrity sha512-tBldZMJZ2BbX2Q0K27rUzpqK6JEaety5mIMd81IJzkj2tDJRXAKiUzk+y+NkrlHjaD5IfUZlju3UmT/LVK9/Gw==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
