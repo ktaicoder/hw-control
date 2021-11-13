@@ -1,7 +1,4 @@
 import { HwKind, IHwInfo } from '@ktaicoder/hw-proto'
-import SerialPort from 'serialport'
-import { ISerialPortInfo } from '../base-types'
-import { createSerialPortOperator } from '../createSerialPortOperator'
 import { MicrobitControl } from './MicrobitControl'
 
 const HWID = 'microbit'
@@ -22,25 +19,9 @@ const info: IHwInfo = {
     ],
 }
 
-/**
- * 하드웨어 연결에 대한 도움 클래스
- */
-const operator = createSerialPortOperator({
-    createSerialPort: function (path: string): SerialPort {
-        return new SerialPort(path, {
-            autoOpen: true,
-            baudRate: 115200,
-        })
-    },
-
-    isMatch: function (portInfo: ISerialPortInfo) {
-        return portInfo.manufacturer === 'mbed'
-    },
-})
-
 export default {
     hwId: HWID,
     info,
-    operator,
+    operator: MicrobitControl,
     control: () => new MicrobitControl(),
 }

@@ -1,5 +1,6 @@
 import { IWiseXboardControl } from '@ktaicoder/hw-proto'
 import SerialPort, { parsers } from 'serialport'
+import { IHwContext, ISerialPortInfo } from '../base-types'
 import { SerialPortHelper } from '../SerialPortHelper'
 
 const DEBUG = true
@@ -12,19 +13,24 @@ const chr = (ch: string): number => ch.charCodeAt(0)
  * 하드웨어 서비스
  */
 export class WiseXboardControl implements IWiseXboardControl {
-    private _helper: SerialPortHelper | undefined = undefined
+    private _context: IHwContext | null = null
 
-    get serialPort(): SerialPort | undefined {
-        return this._helper?.serialPort
+    static createSerialPortHelper = (path: string): SerialPortHelper => {
+        const sp = new SerialPort(path, {
+            autoOpen: true,
+            baudRate: 38400,
+            lock: false,
+        })
+        const parser = new parsers.Delimiter({ delimiter: DELIMITER, includeDelimiter: false })
+        return SerialPortHelper.create(sp, parser)
     }
 
-    set serialPort(port: SerialPort | undefined) {
-        if (port) {
-            const parser = new parsers.Delimiter({ delimiter: DELIMITER, includeDelimiter: false })
-            this._helper = SerialPortHelper.create(port, parser)
-        } else {
-            this._helper = undefined
-        }
+    static isMatch = (portInfo: ISerialPortInfo): boolean => {
+        return portInfo.manufacturer === 'Silicon Labs'
+    }
+
+    private get serialPortHelper(): SerialPortHelper | undefined {
+        return this._context?.provideSerialPortHelper?.()
     }
 
     /**
@@ -32,7 +38,7 @@ export class WiseXboardControl implements IWiseXboardControl {
      * @returns 읽기 가능 여부
      */
     isReadable = (): boolean => {
-        return this._helper?.isReadable() === true
+        return this.serialPortHelper?.isReadable() === true
     }
 
     private checkSerialPort(): SerialPortHelper {
@@ -40,7 +46,7 @@ export class WiseXboardControl implements IWiseXboardControl {
             throw new Error('hw not open')
         }
 
-        return this._helper!
+        return this.serialPortHelper!
     }
 
     private async sendPacketMRTEXE(exeIndex: number) {
@@ -109,8 +115,23 @@ export class WiseXboardControl implements IWiseXboardControl {
         if (l2 < 0) l2 = 256 + l2
         if (r1 < 0) r1 = 256 + r1
         if (r2 < 0) r2 = 256 + r2
-        if (DEBUG) console.log('motorspeed : l1:', l1, ',r1:', r1, ', l2:', l2, ',r2:', r2)
-        await this._helper.write([chr('X'), chr('R'), 0, l1, r1, l2, r2, 0, chr('S')])
+        if (DEBUG) console.log(`motorspeed : l1: ${l1}, r1:${r1}, l2:${l2}, r2: ${r2}`)
+        await this.serialPortHelper.write([chr('X'), chr('R'), 0, l1, r1, l2, r2, 0, chr('S')])
+
+        await this.sendPacketMRTEXE(2)
+    }
+
+    // pinNo = [1,5]
+    async setServoMotorAngle(pinNo: number, angle: number): Promise<void> {
+        if (DEBUG) console.log(`setServoMotorAngle : pinNo: ${pinNo}, angle:${angle}`)
+
+        if (angle < -90) angle = -90
+        if (angle > 90) angle = 90
+        if (angle < 0) angle = 255 + angle
+
+        if (pinNo < 1) pinNo = 1
+        if (pinNo > 5) pinNo = 5
+        await this.serialPortHelper.write([chr('X'), chr('R'), 3, pinNo, angle, 0, 0, 0, chr('S')])
 
         await this.sendPacketMRTEXE(2)
     }

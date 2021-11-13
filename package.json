@@ -24,20 +24,21 @@
   },
   "dependencies": {},
   "peerDependencies": {
+    "@ktaicoder/hw-proto": "^1",
     "rxjs": "^7",
-    "serialport": "^9",
-    "@ktaicoder/hw-proto": "^1.0.6"
+    "serialport": "^9"
   },
   "devDependencies": {
-    "@ktaicoder/hw-proto": "^1.0.6",
     "@babel/eslint-parser": "^7.15.8",
     "@babel/plugin-transform-runtime": "^7.15.8",
+    "@ktaicoder/hw-proto": "^1",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^21.0.0",
     "@rollup/plugin-node-resolve": "^13.0.5",
     "@types/chai": "^4.2.22",
     "@types/mocha": "^9.0.0",
     "@types/node": "^16.10.3",
+    "@types/serialport": "^8.0.2",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "chai": "^4.3.4",

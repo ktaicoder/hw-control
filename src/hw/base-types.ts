@@ -1,4 +1,4 @@
-import SerialPort from 'serialport'
+import { SerialPortHelper } from './SerialPortHelper'
 
 /**
  * 시리얼포트 정보
@@ -16,12 +16,18 @@ export interface ISerialPortInfo {
 }
 
 export type SerialPortMatchFn = (portInfo: ISerialPortInfo) => boolean
-export type SerialPortCreateFn = (path: string) => SerialPort
+export type SerialPortHelperCreateFn = (path: string) => SerialPortHelper
 
 /**
  * 시리얼 포트 하드웨어의 메타 정보
  */
-export interface ISerialPortOperator {
+export type SerialPortOperator = {
     isMatch: SerialPortMatchFn
-    createSerialPort: SerialPortCreateFn
+    createSerialPortHelper: SerialPortHelperCreateFn
+}
+
+export type HwOperator = SerialPortOperator // | BleOperator
+
+export interface IHwContext {
+    provideSerialPortHelper?: () => SerialPortHelper
 }

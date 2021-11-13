@@ -1,5 +1,6 @@
 import { IMicrobitControl } from '@ktaicoder/hw-proto'
 import SerialPort, { parsers } from 'serialport'
+import { IHwContext, ISerialPortInfo } from '../base-types'
 import { SerialPortHelper } from '../SerialPortHelper'
 
 const DEBUG = true
@@ -12,19 +13,23 @@ const chr = (ch: string): number => ch.charCodeAt(0)
  * 하드웨어 서비스
  */
 export class MicrobitControl implements IMicrobitControl {
-    private _helper: SerialPortHelper | undefined = undefined
+    private _context: IHwContext | null = null
 
-    get serialPort(): SerialPort | undefined {
-        return this._helper?.serialPort
+    static createSerialPortHelper = (path: string): SerialPortHelper => {
+        const sp = new SerialPort(path, {
+            autoOpen: true,
+            baudRate: 115200,
+        })
+        const parser = new parsers.Delimiter({ delimiter: DELIMITER, includeDelimiter: false })
+        return SerialPortHelper.create(sp, parser)
     }
 
-    set serialPort(port: SerialPort | undefined) {
-        if (port) {
-            const parser = new parsers.Delimiter({ delimiter: DELIMITER, includeDelimiter: false })
-            this._helper = SerialPortHelper.create(port, parser)
-        } else {
-            this._helper = undefined
-        }
+    static isMatch = (portInfo: ISerialPortInfo): boolean => {
+        return portInfo.manufacturer === 'mbed'
+    }
+
+    private get serialPortHelper(): SerialPortHelper | undefined {
+        return this._context?.provideSerialPortHelper?.()
     }
 
     /**
@@ -32,7 +37,7 @@ export class MicrobitControl implements IMicrobitControl {
      * @returns 읽기 가능 여부
      */
     isReadable = (): boolean => {
-        return this._helper?.isReadable() === true
+        return this.serialPortHelper?.isReadable() === true
     }
 
     private checkSerialPort(): SerialPortHelper {
@@ -40,7 +45,7 @@ export class MicrobitControl implements IMicrobitControl {
             throw new Error('hw not open')
         }
 
-        return this._helper!
+        return this.serialPortHelper!
     }
 
     async analogRead(): Promise<number[]> {

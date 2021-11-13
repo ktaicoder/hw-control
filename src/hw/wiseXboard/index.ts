@@ -1,7 +1,4 @@
 import { HwKind, IHwInfo } from '@ktaicoder/hw-proto'
-import SerialPort from 'serialport'
-import { ISerialPortInfo } from '../base-types'
-import { createSerialPortOperator } from '../createSerialPortOperator'
 import { WiseXboardControl } from './WiseXboardControl'
 
 const HWID = 'wiseXboard'
@@ -21,26 +18,9 @@ const info: IHwInfo = {
     ],
 }
 
-/**
- * 하드웨어 연결에 대한 도움 클래스
- */
-const operator = createSerialPortOperator({
-    createSerialPort: function (path: string): SerialPort {
-        return new SerialPort(path, {
-            autoOpen: true,
-            baudRate: 38400,
-            lock: false,
-        })
-    },
-
-    isMatch: function (portInfo: ISerialPortInfo) {
-        return portInfo.manufacturer === 'Silicon Labs'
-    },
-})
-
 export default {
     hwId: HWID,
     info,
-    operator,
+    operator: WiseXboardControl,
     control: () => new WiseXboardControl(),
 }
