@@ -16,7 +16,7 @@ export interface ISerialPortInfo {
 }
 
 export type SerialPortMatchFn = (portInfo: ISerialPortInfo) => boolean
-export type SerialPortCreateFn = (portInfo: ISerialPortInfo) => SerialPort
+export type SerialPortCreateFn = (path: string) => SerialPort
 
 /**
  * 시리얼 포트 하드웨어의 메타 정보

@@ -25,8 +25,8 @@ const info: IHwInfo = {
  * 하드웨어 연결에 대한 도움 클래스
  */
 const operator = createSerialPortOperator({
-    createSerialPort: function (portInfo: ISerialPortInfo): SerialPort {
-        return new SerialPort(portInfo.path, {
+    createSerialPort: function (path: string): SerialPort {
+        return new SerialPort(path, {
             autoOpen: true,
             baudRate: 38400,
             lock: false,
