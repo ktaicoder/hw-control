@@ -6,6 +6,9 @@
     "type": "git",
     "url": "https://github.com/ktaicoder/hw-control.git"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "main": "cjs/index.js",
   "author": "ktaicoder",
   "license": "MIT",
@@ -13,6 +16,6 @@
   "peerDependencies": {
     "rxjs": "^7",
     "serialport": "^9",
-    "@ktaicoder/hw-proto": "^1.0.4"
+    "@ktaicoder/hw-proto": "^1.0.5"
   }
 }

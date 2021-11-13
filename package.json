@@ -5,6 +5,9 @@
     "type": "git",
     "url": "https://github.com/ktaicoder/hw-control.git"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "main": "build/cjs/index.js",
   "module": "build/es/index.js",
   "private": false,
@@ -27,7 +30,7 @@
     "@ktaicoder/hw-proto": "^1.0.6"
   },
   "devDependencies": {
-    "@ktaicoder/hw-proto": "^1.0.4",
+    "@ktaicoder/hw-proto": "^1.0.5",
     "@babel/eslint-parser": "^7.15.8",
     "@babel/plugin-transform-runtime": "^7.15.8",
     "@rollup/plugin-babel": "^5.3.0",
