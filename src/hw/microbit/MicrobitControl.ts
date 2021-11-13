@@ -1,4 +1,4 @@
-import { IMicrobitControl } from '@aimk/hw-proto'
+import { IMicrobitControl } from '@ktaicoder/hw-proto'
 import SerialPort, { parsers } from 'serialport'
 import { SerialPortHelper } from '../SerialPortHelper'
 

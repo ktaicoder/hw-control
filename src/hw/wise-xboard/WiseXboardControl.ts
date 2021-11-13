@@ -1,4 +1,4 @@
-import { IWiseXboardControl } from '@aimk/hw-proto'
+import { IWiseXboardControl } from '@ktaicoder/hw-proto'
 import SerialPort, { parsers } from 'serialport'
 import { SerialPortHelper } from '../SerialPortHelper'
 

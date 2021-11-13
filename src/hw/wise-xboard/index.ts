@@ -1,4 +1,4 @@
-import { HwKind, IHwInfo } from '@aimk/hw-proto'
+import { HwKind, IHwInfo } from '@ktaicoder/hw-proto'
 import SerialPort from 'serialport'
 import { ISerialPortInfo } from '../base-types'
 import { createSerialPortOperator } from '../createSerialPortOperator'
