@@ -4,7 +4,7 @@ import { ISerialPortInfo } from '../base-types'
 import { createSerialPortOperator } from '../createSerialPortOperator'
 import { WiseXboardControl } from './WiseXboardControl'
 
-const HWID = 'wise-xboard'
+const HWID = 'wiseXboard'
 
 const info: IHwInfo = {
     hwId: HWID,
