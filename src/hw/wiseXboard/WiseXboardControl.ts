@@ -90,7 +90,7 @@ export class WiseXboardControl implements IWiseXboardControl {
         await helper.write(pkt)
     }
 
-    async dcMotorStop(): Promise<void> {
+    async stopDCMotor(): Promise<void> {
         const helper = this.checkSerialPort()
         const pkt = [chr('X'), chr('R'), 0, 0, 0, 0, 0, 0, chr('S')]
         await helper.write(pkt)
@@ -105,7 +105,7 @@ export class WiseXboardControl implements IWiseXboardControl {
      * @param r2
      */
 
-    async dcMotorSpeed(l1: number, r1: number, l2: number, r2: number): Promise<void> {
+    async setDCMotorSpeed(l1: number, r1: number, l2: number, r2: number): Promise<void> {
         if (l1 < -10) l1 = -10
         if (r1 < -10) r1 = -10
         if (l2 > 10) l2 = 10
