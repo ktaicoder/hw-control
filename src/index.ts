@@ -3,7 +3,7 @@ export * from './common-types'
 export * from './hw/findFirstSerialPort'
 
 // 지원 하드웨어 목록
-import wiseXboard from './hw/wise-xboard'
+import wiseXboard from './hw/wiseXboard'
 import microbit from './hw/microbit'
 
 export const controls = {
