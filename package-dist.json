@@ -1,7 +1,7 @@
 {
   "name": "@ktaicoder/hw-control",
   "private": false,
-  "version": "1.0.6",
+  "version": "1.0.7",
   "repository": {
     "type": "git",
     "url": "https://github.com/ktaicoder/hw-control.git"
@@ -16,6 +16,6 @@
   "peerDependencies": {
     "rxjs": "^7",
     "serialport": "^9",
-    "@ktaicoder/hw-proto": "^1.0.5"
+    "@ktaicoder/hw-proto": "^1.0.0"
   }
 }
