@@ -18,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/ktaicoder/hw-control/issues"
   },
-  "homepage": "https://aicodingblock.kt.co.kr"
+  "homepage": "https://aicodingblock.kt.co.kr",
+  "keywords": [
+    "kt",
+    "aicodingblock",
+    "blockcoding",
+    "hardware"
+  ]
 }

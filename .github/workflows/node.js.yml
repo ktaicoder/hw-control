@@ -27,8 +27,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         registry-url: https://registry.npmjs.org
         scope: '@ktaicoder'
-    # - run: echo '@ktaicoder:registry=https://npm.pkg.github.com' > .npmrc
-    # - run: echo //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }} >> .npmrc
     - run: yarn install
     - run: yarn dist
     - run: npm publish dist --access=public

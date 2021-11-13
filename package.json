@@ -1,6 +1,6 @@
 {
   "name": "@ktaicoder/hw-control",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ktaicoder/hw-control.git"
@@ -62,5 +62,11 @@
   "bugs": {
     "url": "https://github.com/ktaicoder/hw-control/issues"
   },
-  "homepage": "https://aicodingblock.kt.co.kr"
+  "homepage": "https://aicodingblock.kt.co.kr",
+  "keywords": [
+    "kt",
+    "aicodingblock",
+    "blockcoding",
+    "hardware"
+  ]
 }
