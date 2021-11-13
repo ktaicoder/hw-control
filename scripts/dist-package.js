@@ -20,6 +20,7 @@ async function main() {
     shell.cp('-rf', './build/cjs', 'dist/')
     updatePackageDistJson()
     shell.cp('-rf', 'package-dist.json', 'dist/package.json')
+    shell.cp('-rf', 'README.md', 'dist/')
 }
 
 main()
