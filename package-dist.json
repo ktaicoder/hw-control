@@ -1,8 +1,8 @@
 {
-  "name": "@ktaicoder/hw-proto",
+  "name": "@ktaicoder/hw-control",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ktaicoder/hw-proto.git"
+    "url": "https://github.com/ktaicoder/hw-control.git"
   },
   "private": false,
   "version": "1.0.4",
