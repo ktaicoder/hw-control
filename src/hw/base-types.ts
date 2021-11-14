@@ -7,12 +7,12 @@ import { SerialPortHelper } from './SerialPortHelper'
  */
 export interface ISerialPortInfo {
     path: string
-    manufacturer?: string | undefined
-    serialNumber?: string | undefined
-    pnpId?: string | undefined
-    locationId?: string | undefined
-    productId?: string | undefined
-    vendorId?: string | undefined
+    manufacturer?: string
+    serialNumber?: string
+    pnpId?: string
+    locationId?: string
+    productId?: string
+    vendorId?: string
 }
 
 export type SerialPortMatchFn = (portInfo: ISerialPortInfo) => boolean
