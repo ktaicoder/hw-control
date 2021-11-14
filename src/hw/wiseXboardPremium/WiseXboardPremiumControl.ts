@@ -12,6 +12,10 @@ const DELIMITER = Buffer.from([0x23, 0x08, 0x0])
 export class WiseXboardPremiumControl implements IWiseXboardPremiumControl {
     private _context: IHwContext | null = null
 
+    setContext(context: IHwContext | null | undefined) {
+        this._context = context ?? null
+    }
+
     static createSerialPortHelper = (path: string): SerialPortHelper => {
         const sp = new SerialPort(path, {
             autoOpen: true,

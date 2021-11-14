@@ -15,6 +15,10 @@ const chr = (ch: string): number => ch.charCodeAt(0)
 export class WiseXboardControl implements IWiseXboardControl {
     private _context: IHwContext | null = null
 
+    setContext(context: IHwContext | null | undefined) {
+        this._context = context ?? null
+    }
+
     static createSerialPortHelper = (path: string): SerialPortHelper => {
         const sp = new SerialPort(path, {
             autoOpen: true,
