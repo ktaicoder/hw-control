@@ -61,6 +61,7 @@ export class WiseXboardControl implements IWiseXboardControl {
     async analogRead(): Promise<number[]> {
         const helper = this.checkSerialPort()
         const values = await helper.readNext()
+
         // [pin1 ~ pin5]
         return new Array(5).fill(0).map((_, i) => values[i] ?? 0)
     }
@@ -115,23 +116,23 @@ export class WiseXboardControl implements IWiseXboardControl {
         if (l2 < 0) l2 = 256 + l2
         if (r1 < 0) r1 = 256 + r1
         if (r2 < 0) r2 = 256 + r2
-        if (DEBUG) console.log(`motorspeed : l1: ${l1}, r1:${r1}, l2:${l2}, r2: ${r2}`)
+        if (DEBUG) console.log(`setDCMotorSpeed : l1: ${l1}, r1:${r1}, l2:${l2}, r2: ${r2}`)
         await this.serialPortHelper.write([chr('X'), chr('R'), 0, l1, r1, l2, r2, 0, chr('S')])
 
         await this.sendPacketMRTEXE(2)
     }
 
     // pinNo = [1,5]
-    async setServoMotorAngle(pinNo: number, angle: number): Promise<void> {
-        if (DEBUG) console.log(`setServoMotorAngle : pinNo: ${pinNo}, angle:${angle}`)
+    async setServoMotorAngle(pinNum: number, angle: number): Promise<void> {
+        if (DEBUG) console.log(`setServoMotorAngle : pinNo: ${pinNum}, angle:${angle}`)
 
         if (angle < -90) angle = -90
         if (angle > 90) angle = 90
         if (angle < 0) angle = 255 + angle
 
-        if (pinNo < 1) pinNo = 1
-        if (pinNo > 5) pinNo = 5
-        await this.serialPortHelper.write([chr('X'), chr('R'), 3, pinNo, angle, 0, 0, 0, chr('S')])
+        if (pinNum < 1) pinNum = 1
+        if (pinNum > 5) pinNum = 5
+        await this.serialPortHelper.write([chr('X'), chr('R'), 3, pinNum, angle, 0, 0, 0, chr('S')])
 
         await this.sendPacketMRTEXE(2)
     }
