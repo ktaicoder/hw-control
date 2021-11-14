@@ -185,17 +185,19 @@ export class WiseXboardPremiumControl implements IWiseXboardPremiumControl {
 
     /**
      * n번핀 서보모터 각도 angle로 정하기
-     * pinNum = [1,5], angle=[-90, 90], speed=[1,30]
+     * pinNum = [1,5], angle=[-90, 90]
      */
-    async setServoMotorAngleP(pinNum: number, angle: number, speed: number): Promise<void> {
+    async setServoMotorAngleP(pinNum: number, angle: number): Promise<void> {
         if (DEBUG) console.log(`setServoMotorAngleP() : pinNo:${pinNum}, angle:${angle}`)
 
         if (angle < -90) angle = -90
         if (angle > 90) angle = 90
         if (angle < 0) angle = 255 + angle
 
-        if (speed > 30) speed = 30
-        if (speed < 1) speed = 1
+        // 기존에 속도값은 전달하지 않는다
+        // if (speed > 30) speed = 30
+        // if (speed < 1) speed = 1
+        const speed = -1
 
         if (pinNum < 3) pinNum = 3
         if (pinNum > 6) pinNum = 6
