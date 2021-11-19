@@ -9,6 +9,6 @@
 - 다음과 같이 설치할 수 있습니다.
 
 ```bash
-$  yarn add @ktaicoder/hw-control@^1.0.8
+$  yarn add @ktaicoder/hw-control@^1
 ```
 
