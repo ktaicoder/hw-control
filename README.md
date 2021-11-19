@@ -12,3 +12,7 @@
 $  yarn add @ktaicoder/hw-control@^1
 ```
 
+## NPM 링크
+
+https://www.npmjs.com/package/@ktaicoder/hw-control
+
