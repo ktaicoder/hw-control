@@ -143,4 +143,33 @@ export class WiseXboardControl implements IWiseXboardControl {
         await helper.write([chr('X'), chr('R'), 3, pinNum, angle, 0, 0, 0, chr('S')])
         await this.sendPacketMRTEXE(2)
     }
+
+    /**
+     * 하드웨어를 연결했을때 자동으로 호출합니다
+     */
+    async onAfterOpen(): Promise<void> {
+        if (DEBUG) console.log('XXX onAfterOpen()')
+    }
+
+    /**
+     * 연결 종료합니다
+     * 클라이언트의 연결이 종료되었을 때,
+     * 프레임워크가 자동으로 호출해준다.
+     * 이름은 onCloseBefore(), 함수인자는 없어야 한다.
+     */
+    async onBeforeClose(): Promise<void> {
+        if (DEBUG) console.log('XXX onBeforeClose()')
+        const helper = this.checkSerialPort()
+
+        // 모터 중지
+        try {
+            await this.stopDCMotor()
+        } catch (err) {}
+
+        // 모든 LED OFF
+        try {
+            // 아무핀에나 0을 쓰면 모두 0이 된다.
+            await this.digitalWrite(1, 0)
+        } catch (ignore) {}
+    }
 }
