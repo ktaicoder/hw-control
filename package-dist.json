@@ -12,7 +12,7 @@
     "peerDependencies": {
         "rxjs": "^7",
         "serialport": "^9",
-        "@ktaicoder/hw-proto": "^1"
+        "@ktaicoder/hw-proto": "^1.0.14"
     },
     "description": "KT AI Block coding hardware control",
     "bugs": {
