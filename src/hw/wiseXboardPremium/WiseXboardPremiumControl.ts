@@ -18,7 +18,7 @@ export class WiseXboardPremiumControl implements IWiseXboardPremiumControl {
 
     static createSerialPortHelper = (path: string): SerialPortHelper => {
         const sp = new SerialPort(path, {
-            autoOpen: true,
+            autoOpen: false,
             baudRate: 38400,
             lock: false,
         })
@@ -27,10 +27,14 @@ export class WiseXboardPremiumControl implements IWiseXboardPremiumControl {
     }
 
     static isMatch = (portInfo: ISerialPortInfo): boolean => {
-        return portInfo.manufacturer === 'Silicon Labs'
+        return true
+        // if (portInfo.manufacturer) {
+        //     return portInfo.manufacturer.includes('Silicon Labs')
+        // }
+        // return false
     }
 
-    private get serialPortHelper(): SerialPortHelper | undefined {
+    private getSerialPortHelper(): SerialPortHelper | undefined {
         return this._context?.provideSerialPortHelper?.()
     }
 
@@ -39,21 +43,22 @@ export class WiseXboardPremiumControl implements IWiseXboardPremiumControl {
      * @returns 읽기 가능 여부
      */
     isReadable = (): boolean => {
-        return this.serialPortHelper?.isReadable() === true
+        const sp = this.getSerialPortHelper()
+        return sp?.isReadable() === true
     }
 
     private checkSerialPort(): SerialPortHelper {
         if (!this.isReadable()) {
             throw new Error('hw not open')
         }
-
-        return this.serialPortHelper!
+        return this.getSerialPortHelper()!
     }
 
     /**
      * DC 모터1,2 속도 설정
      */
     async setDCMotorSpeedP(l1: number, r1: number, l2: number, r2: number): Promise<void> {
+        const helper = this.checkSerialPort()
         if (l1 < -100) l1 = -100
         if (r1 < -100) r1 = -100
         if (l1 > 100) l1 = 100
@@ -74,13 +79,14 @@ export class WiseXboardPremiumControl implements IWiseXboardPremiumControl {
             cksum ^= buf[i]
         }
         buf[buf.length - 1] = cksum
-        await this.serialPortHelper.write(buf)
+        await helper.write(buf)
     }
 
     /**
      * DC 모터1 속도 설정
      */
     async setDCMotor1SpeedP(l1: number, r1: number): Promise<void> {
+        const helper = this.checkSerialPort()
         if (l1 < -100) l1 = -100
         if (r1 < -100) r1 = -100
         if (l1 > 100) l1 = 100
@@ -95,13 +101,14 @@ export class WiseXboardPremiumControl implements IWiseXboardPremiumControl {
             cksum ^= buf[i]
         }
         buf[buf.length - 1] = cksum
-        await this.serialPortHelper.write(buf)
+        await helper.write(buf)
     }
 
     /**
      * DC 모터2 속도 설정
      */
     async setDCMotor2SpeedP(l2: number, r2: number): Promise<void> {
+        const helper = this.checkSerialPort()
         if (l2 < -100) l2 = -100
         if (r2 < -100) r2 = -100
         if (l2 > 100) l2 = 100
@@ -116,7 +123,7 @@ export class WiseXboardPremiumControl implements IWiseXboardPremiumControl {
             cksum ^= buf[i]
         }
         buf[buf.length - 1] = cksum
-        await this.serialPortHelper.write(buf)
+        await helper.write(buf)
     }
 
     /**
@@ -155,7 +162,9 @@ export class WiseXboardPremiumControl implements IWiseXboardPremiumControl {
         for (let i = 0; i < remainCount; i++) {
             remainCount--
             try {
-                return await this._read7()
+                const ret = await this._read7()
+                console.log('_read7Retry() = ', ret)
+                return ret
             } catch (err) {
                 const msg: string = err.message ?? ''
                 if (
@@ -170,6 +179,7 @@ export class WiseXboardPremiumControl implements IWiseXboardPremiumControl {
                 throw err
             }
         }
+        return new Array(7).fill(0)
     }
 
     /**
@@ -193,6 +203,7 @@ export class WiseXboardPremiumControl implements IWiseXboardPremiumControl {
      */
     async setServoMotorAngleP(pinNum: number, angle: number): Promise<void> {
         if (DEBUG) console.log(`setServoMotorAngleP() : pinNo:${pinNum}, angle:${angle}`)
+        const helper = this.checkSerialPort()
 
         if (angle < -90) angle = -90
         if (angle > 90) angle = 90
@@ -212,7 +223,7 @@ export class WiseXboardPremiumControl implements IWiseXboardPremiumControl {
             cksum ^= buf[i]
         }
         buf[buf.length - 1] = cksum
-        await this.serialPortHelper.write(buf)
+        await helper.write(buf)
     }
 
     /**
@@ -250,31 +261,65 @@ export class WiseXboardPremiumControl implements IWiseXboardPremiumControl {
      * pinNum = [0~5], value = [0,1]
      */
     async digitalWriteP(pinNum: number, value: number): Promise<void> {
-        value = value < 0 ? 0 : 1
-        pinNum = pinNum < 0 ? 0 : pinNum > 5 ? 5 : pinNum
+        const helper = this.checkSerialPort()
+        value = value <= 0 ? 0 : 1
+        pinNum = pinNum <= 0 ? 0 : pinNum >= 5 ? 5 : pinNum
         if (DEBUG) console.log(`digitalWriteP : pinNo: ${pinNum}, value:${value}`)
 
         let cksum = 0
         const buf = [0x23, 3, 0x80, pinNum, value, 0]
-        for (let i = 2; buf.length - 1; i++) {
+        for (let i = 2; i < buf.length - 1; i++) {
             cksum ^= buf[i]
         }
         buf[buf.length - 1] = cksum
-        await this.serialPortHelper.write(buf)
+        if (DEBUG) console.log(`digitalWriteP : buf=`, buf)
+        await helper.write(buf)
     }
 
     /**
      * 키값 전송
      */
     async sendKeyP(key: number): Promise<void> {
+        const helper = this.checkSerialPort()
         if (DEBUG) console.log(`sendKeyP(): key: ${key}`)
 
         let cksum = 0
         const buf = [0x23, 2, 0x84, key, 0]
-        for (let i = 2; buf.length - 1; i++) {
+        for (let i = 2; i < buf.length - 1; i++) {
             cksum ^= buf[i]
         }
         buf[buf.length - 1] = cksum
-        await this.serialPortHelper.write(buf)
+        await helper.write(buf)
+    }
+
+    /**
+     * 하드웨어를 연결했을때 자동으로 호출합니다
+     */
+    async onAfterOpen(): Promise<void> {
+        if (DEBUG) console.log('XXX onAfterOpen()')
+    }
+
+    /**
+     * 연결 종료합니다
+     * 클라이언트의 연결이 종료되었을 때,
+     * 프레임워크가 자동으로 호출해준다.
+     * 이름은 onBeforeClose(), 함수인자는 없어야 한다.
+     */
+    async onBeforeClose(): Promise<void> {
+        if (DEBUG) console.log('XXX onBeforeClose()')
+        const helper = this.checkSerialPort()
+
+        // 모터 중지
+        try {
+            await this.stopDCMotorP()
+        } catch (err) {}
+
+        // 모든 LED OFF
+        try {
+            // 아무핀에나 0을 쓰면 모두 0이 된다.
+            for (let i = 0; i < 7; i++) {
+                await this.digitalWriteP(i, 0)
+            }
+        } catch (ignore) {}
     }
 }
