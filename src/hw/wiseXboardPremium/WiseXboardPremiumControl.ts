@@ -212,7 +212,7 @@ export class WiseXboardPremiumControl implements IWiseXboardPremiumControl {
         // 기존에 속도값은 전달하지 않는다
         // if (speed > 30) speed = 30
         // if (speed < 1) speed = 1
-        const speed = -1
+        const speed = 20
 
         if (pinNum < 3) pinNum = 3
         if (pinNum > 6) pinNum = 6
