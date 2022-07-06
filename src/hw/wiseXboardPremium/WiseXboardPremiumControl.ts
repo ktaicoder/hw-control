@@ -231,7 +231,7 @@ export class WiseXboardPremiumControl implements IWiseXboardPremiumControl {
      */
     async readRemoconP(): Promise<number> {
         if (DEBUG) console.log('readRemoconP()')
-        const values = this._read7Retry()
+        const values = await this._read7Retry()
         return values[6]
     }
 
@@ -312,7 +312,7 @@ export class WiseXboardPremiumControl implements IWiseXboardPremiumControl {
         // 모터 중지
         try {
             await this.stopDCMotorP()
-        } catch (err) {}
+        } catch (err) { }
 
         // 모든 LED OFF
         try {
@@ -320,6 +320,6 @@ export class WiseXboardPremiumControl implements IWiseXboardPremiumControl {
             for (let i = 0; i < 7; i++) {
                 await this.digitalWriteP(i, 0)
             }
-        } catch (ignore) {}
+        } catch (ignore) { }
     }
 }
