@@ -16,7 +16,7 @@
     "build": "rimraf build && rollup -c rollup.config.all.js",
     "build:es": "rimraf build && rollup -c rollup.config.es.js",
     "build:cjs": "rimraf build && rollup -c rollup.config.cjs.js",
-    "dist": "yarn build:cjs && rimraf dist && node scripts/dist-package.js",
+    "dist": "yarn build && rimraf dist && node scripts/dist-package.js",
     "clean": "rimraf build dist",
     "lint": "eslint --fix \"src/**\" ",
     "fmt": "prettier --write \"src/**\" ",
@@ -63,9 +63,10 @@
   "bugs": {
     "url": "https://github.com/ktaicoder/hw-control/issues"
   },
-  "homepage": "https://aicodingblock.kt.co.kr",
+  "homepage": "https://aicodiny.com",
   "keywords": [
     "kt",
+    "aicodiny",
     "aicodingblock",
     "blockcoding",
     "hardware"
