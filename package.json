@@ -14,8 +14,6 @@
   "license": "MIT",
   "scripts": {
     "build": "rimraf build && rollup -c rollup.config.all.js",
-    "build:es": "rimraf build && rollup -c rollup.config.es.js",
-    "build:cjs": "rimraf build && rollup -c rollup.config.cjs.js",
     "dist": "yarn build && rimraf dist && node scripts/dist-package.js",
     "clean": "rimraf build dist",
     "lint": "eslint --fix \"src/**\" ",
@@ -59,7 +57,7 @@
     "tslib": "^2.3.1",
     "typescript": "^4.4.3"
   },
-  "description": "KT AI Block coding hardware control",
+  "description": "AI Codiny hardware control by serialport",
   "bugs": {
     "url": "https://github.com/ktaicoder/hw-control/issues"
   },
@@ -68,6 +66,7 @@
     "kt",
     "aicodiny",
     "aicodingblock",
+    "serialport",
     "blockcoding",
     "hardware"
   ]
